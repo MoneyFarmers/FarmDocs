@@ -1,14 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>FarmDocs</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoneyFarmers — Creator Automation & TikTok Publishing</title>
+  <meta name="description" content="MoneyFarmers is a CLI-first tool for secure TikTok authentication, automated video uploads, and direct posting with auditing, retries, and domain-verified pulls." />
+  <style>
+    :root{
+      --bg:#0f1226;       /* deep indigo */
+      --bg-soft:#14183a;  /* section */
+      --card:#181c48;     /* card */
+      --accent:#7dd3fc;   /* cyan */
+      --accent-2:#a78bfa; /* violet */
+      --txt:#f3f4f6;      /* light */
+      --muted:#cbd5e1;    /* muted */
+      --ok:#34d399;       /* green */
+      --warn:#f59e0b;     /* amber */
+      --err:#ef4444;      /* red */
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,Arial,sans-serif;
+      color:var(--txt);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(167,139,250,.25), transparent 60%),
+        radial-gradient(900px 500px at 120% 10%, rgba(125,211,252,.15), transparent 60%),
+        var(--bg);
+    }
+    a{color:var(--accent)}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    header{
+      position:sticky;top:0;z-index:10;
+      backdrop-filter:saturate(140%) blur(8px);
+      background:linear-gradient(to right, rgba(20,24,58,.85), rgba(24,28,72,.85));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
+    .brand h1{margin:0;font-size:1.1rem;letter-spacing:.3px}
+    .nav a{margin-left:16px;text-decoration:none;color:var(--txt);opacity:.9}
+    .nav a:hover{opacity:1}
+
+    .hero{padding:72px 0}
+    .hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center}
+    .hero h2{margin:0 0 10px;font-size:2.2rem;line-height:1.2}
+    .hero p{color:var(--muted);margin:0 0 22px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(125,211,252,.12);border:1px solid rgba(125,211,252,.35);color:var(--accent);font-size:.9rem}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{appearance:none;border:none;cursor:pointer;border-radius:12px;padding:12px 16px;font-weight:600}
+    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#0b1027;box-shadow:var(--shadow)}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--txt)}
+    .mock{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+    .code{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size:.95rem;color:#e5e7eb}
+
+    section{padding:56px 0}
+    .kicker{letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-size:.78rem;margin:0 0 8px}
+    h3{margin:0 0 16px}
+
+    .grid{display:grid;gap:18px}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+    @media (max-width:900px){.hero-inner{grid-template-columns:1fr}.grid.cols-3{grid-template-columns:1fr}.grid.cols-2{grid-template-columns:1fr}}
+
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .card h4{margin:0 0 8px}
+    .muted{color:var(--muted)}
+    .list{margin:10px 0 0;padding-left:18px}
+
+    .badge{display:inline-block;border-radius:8px;padding:2px 8px;font-size:.75rem;border:1px solid rgba(255,255,255,.16);opacity:.9}
+
+    .faq dt{font-weight:700;margin-top:14px}
+    .faq dd{margin:6px 0 0 0;color:var(--muted)}
+
+    footer{border-top:1px solid rgba(255,255,255,.08);background:linear-gradient(to right, rgba(24,28,72,.9), rgba(20,24,58,.9));padding:28px 0;margin-top:36px}
+    .footer-grid{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+    .footer-links a{margin-right:16px}
+    .copy{color:#9ca3af}
+  </style>
 </head>
 <body>
-  <h1>📄 FarmDocs</h1>
-  <ul>
-    <li><a href="Privacy Policy.html">Privacy Policy</a></li>
-    <li><a href="Terms of Service.html">Terms of Service</a></li>
-  </ul>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>MoneyFarmers</h1>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#security">Security</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="about">
+      <div class="container hero-inner">
+        <div>
+          <span class="pill">CLI-first · OAuth2 · TikTok Publishing</span>
+          <h2>Automate your creator pipeline from the command line.</h2>
+          <p>MoneyFarmers is a pragmatic toolkit for creators and teams who post to TikTok at scale. Authenticate once, queue videos, upload as drafts or <strong>Direct Post</strong> to authorized profiles, and keep a clean audit trail with retries and rate-limit handling.</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="#how">See the flow</a>
+            <a class="btn btn-ghost" href="#features">Explore features</a>
+          </div>
+        </div>
+        <div class="mock">
+<pre class="code"># Login (opens browser for TikTok OAuth)
+$ mfarm auth --redirect http://localhost:3099/callback
+
+# Upload as draft
+$ mfarm post draft \
+    --file clip.mp4 \
+    --caption "Boss fight highlights" \
+    --tags boss,challenge
+
+# Direct Post (after reviewer approval)
+$ mfarm post direct --file clip.mp4 --caption "Speedrun 1:23"
+
+# Pull-by-URL (domain verified)
+$ mfarm post draft --pull https://cdn.example.com/video/1234.mp4</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <p class="kicker">Capabilities</p>
+        <h3>Built for speed, safety, and repeatability.</h3>
+        <div class="grid cols-3">
+          <article class="card">
+            <h4>Secure TikTok Login</h4>
+            <p class="muted">OAuth2 Authorization Code flow with localhost callback. Stores access/refresh tokens encrypted at rest.</p>
+            <ul class="list">
+              <li class="badge">Login Kit</li>
+              <li class="badge">Token refresh</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h4>Draft & Direct Post</h4>
+            <p class="muted">Upload as drafts for final edits or publish instantly via <em>Direct Post</em> once your app is approved for production.</p>
+            <ul class="list">
+              <li class="badge">Content Posting API</li>
+              <li class="badge">Captions & tags</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h4>Push & Pull media</h4>
+            <p class="muted">Send local files (<code>push_by_file</code>) or pull from verified HTTPS origins (<code>pull_by_url</code>) after domain verification.</p>
+            <ul class="list">
+              <li class="badge">Domain verification</li>
+              <li class="badge">HTTPS only</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h4>Queue & Retry</h4>
+            <p class="muted">Local job queue with exponential backoff and jitter. Survives flaky networks and avoids rate spikes.</p>
+            <ul class="list">
+              <li class="badge">Backoff</li>
+              <li class="badge">Idempotent ops</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h4>Observability</h4>
+            <p class="muted">Structured logs (JSON/text), per-job audit trail, and exit codes that play nicely with CI.</p>
+            <ul class="list">
+              <li class="badge">Audit trail</li>
+              <li class="badge">CI-friendly</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h4>Config as Code</h4>
+            <p class="muted">Project-level <code>mfarm.yaml</code> with profiles for staging/production. Secrets via env vars or OS keychain.</p>
+            <ul class="list">
+              <li class="badge">Profiles</li>
+              <li class="badge">Keychain</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="container">
+        <p class="kicker">Flow</p>
+        <h3>From login to post in three steps.</h3>
+        <div class="grid cols-3">
+          <div class="card">
+            <h4>1) Authenticate</h4>
+            <p class="muted">Run <code>mfarm auth</code>. We open your browser to TikTok, you grant access, we capture <code>code</code> via <code>http://localhost:&lt;port&gt;/callback</code> and exchange it for tokens.</p>
+          </div>
+          <div class="card">
+            <h4>2) Prepare</h4>
+            <p class="muted">Choose <em>Draft</em> or <em>Direct Post</em>, set caption, hashtags, cover frame, and optional scheduling window (where supported).</p>
+          </div>
+          <div class="card">
+            <h4>3) Publish</h4>
+            <p class="muted">Upload the file or provide a verified HTTPS URL. We handle chunked transfer, retries, and report the TikTok video ID.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="security">
+      <div class="container">
+        <p class="kicker">Security</p>
+        <h3>Security-first by design.</h3>
+        <div class="grid cols-2">
+          <div class="card">
+            <h4>Token handling</h4>
+            <p class="muted">Access/refresh tokens are stored encrypted at rest (OS keychain or encrypted keystore). Automatic rotation with grace windows and scope checks.</p>
+          </div>
+          <div class="card">
+            <h4>Least privilege</h4>
+            <p class="muted">Only the scopes required for Login Kit + Content Posting. No broad access. Clear revocation path and safe failure modes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <p class="kicker">FAQ</p>
+        <div class="card">
+          <dl class="faq">
+            <dt>Do I need a website for a CLI app?</dt>
+            <dd>Yes. TikTok requires an official Website URL plus visible links to Terms of Service and Privacy Policy. This page is designed for that requirement.</dd>
+            <dt>Can I use pull_by_url?</dt>
+            <dd>Yes, after verifying your domain. Media must be reachable over HTTPS without redirects and remain available until ingest completes.</dd>
+            <dt>What about rate limits?</dt>
+            <dd>We apply jittered backoff, local queuing, and resumable uploads where applicable. You see clear status and retry counts in logs.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="card">
+          <h3>Contact</h3>
+
+          <p><a href="mailto:moneyfarmers.dev@gmail.com">Creature inssue in gitlab project</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="brand" aria-label="MoneyFarmers">
+        <div class="logo" aria-hidden="true"></div>
+        <strong>MoneyFarmers</strong>
+      </div>
+      <div class="footer-links">
+        <a href="https://moneyfarmers.github.io/FarmDocs/Terms%20of%20Service.html" target="_blank" rel="noopener">Terms of Service</a>
+        <a href="https://moneyfarmers.github.io/FarmDocs/Privacy%20Policy.html" target="_blank" rel="noopener">Privacy Policy</a>
+      </div>
+      <div class="copy">© 2025 MoneyFarmers</div>
+    </div>
+  </footer>
 </body>
 </html>
